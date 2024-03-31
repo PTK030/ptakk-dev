@@ -3,13 +3,14 @@ import React, {FormEvent} from 'react'
 import {NextFont} from "next/dist/compiled/@next/font";
 import {Poppins} from "next/font/google";
 import {useState} from "react";
-import {NextRouter, useRouter} from "next/navigation";
+import {useRouter} from "next/navigation";
+import {AppRouterInstance} from "next/dist/shared/lib/app-router-context.shared-runtime";
 const poppins: NextFont = Poppins({ subsets: ["latin"], weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"] });
 const Contact = () => {
     const [name, setName] = useState<string>("")
     const [email, setEmail] = useState<string>("")
     const [message, setMessage] = useState<string>("")
-    const router: NextRouter = useRouter()
+    const router: AppRouterInstance = useRouter()
     const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!name || !email || !message) {
