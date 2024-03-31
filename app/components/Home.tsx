@@ -3,6 +3,7 @@ import React from 'react'
 import { TypeAnimation } from 'react-type-animation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAnglesRight, faAngleDown } from '@fortawesome/free-solid-svg-icons'
+import Image from "next/image";
 
 
 const Home = () => {
@@ -37,7 +38,7 @@ const Home = () => {
         </div>
         <div className="home_img" data-aos="fade-up"
      data-aos-duration="3000">
-          <img src="/memoji.png" alt="chłopiec mrugający okiem" />
+          <Image src="/memoji.png" alt="chłopiec mrugający okiem" height={250} width={250}/>
         </div>
         <a href="#aboutme">
           <FontAwesomeIcon icon={faAngleDown} beat className='home_arrow-down'/>
