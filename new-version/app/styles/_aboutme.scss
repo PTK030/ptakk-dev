@@ -1,0 +1,56 @@
+.aboutme{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &_content{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    max-width: 800px;
+    &-rightbox,
+    &-leftbox{
+      width: 50%;
+
+      padding: 0 3em;
+
+    }
+    &-rightbox{
+      display: flex;
+      align-items: flex-end;
+      flex-direction: column;
+      &_heading{
+        font-size: 2.6rem;
+        position: relative;
+        margin-bottom: 0.6em;
+        &::before{
+          position: absolute;
+          content: '';
+          bottom: 0px;
+          right: 0;
+          width: 100%;
+          height: 3px;
+          border-radius: 3px;
+          background-color: $main;
+        }
+      }
+      &_welcome{
+        font-size: 1.8rem;
+        text-align: right;
+      }
+    }
+    &-leftbox{
+      height: 100%;
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+      &_description{
+        display: flex;
+        align-items: flex-end;
+
+        font-size: 1.2rem;
+      }
+    }
+  }
+}

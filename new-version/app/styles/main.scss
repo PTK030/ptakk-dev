@@ -1,0 +1,71 @@
+@import 'colors';
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+
+.locked{
+  overflow-y: hidden;
+}
+
+html{
+  font-size: 67.5%;
+  color: whitesmoke;
+  transition: .3s all;
+  scroll-behavior: smooth;
+}
+
+a{
+  color: white;
+  text-decoration: none;
+}
+
+
+::-webkit-scrollbar{
+  width: 8px;
+}
+
+::-webkit-scrollbar-track{
+  background: black;
+}
+
+::-webkit-scrollbar-thumb{
+  background: $main;
+  border-radius: 4px;
+}
+
+section{
+  height: 100vh;
+  width: 100%;
+  padding: 3em 4em;
+  padding-top: 3em;
+  background: rgb(7,36,48);
+  background: -moz-radial-gradient(circle, rgba(7,36,48,1) 0%, rgba(27,29,30,1) 100%);
+  background: -webkit-radial-gradient(circle, rgba(7,36,48,1) 0%, rgba(27,29,30,1) 100%);
+  background: radial-gradient(circle, rgba(7,36,48,1) 0%, rgba(27,29,30,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#072430",endColorstr="#1b1d1e",GradientType=1);
+  &:first-child{
+    padding-top: 0;
+  }
+  &:last-child{
+    padding-bottom: 20em;
+  }
+}
+
+.box{
+  height: 100%;
+  display: flex;
+
+}
+
+@import 'navbar';
+@import 'home';
+@import 'aboutme';
+@import 'skills';
+@import 'projects';
+@import 'contact';
+@import 'footer';
+@import 'responsives';

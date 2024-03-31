@@ -1,0 +1,14 @@
+.footer {
+  background: $color1-1;
+  width: 100%;
+  text-align: center;
+  padding: 1.5em 2em;
+  font-size: 1.8rem;
+  font-weight: 500;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  &__copyright {
+    vertical-align: middle;
+  }
+
+}
