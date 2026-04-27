@@ -1,0 +1,257 @@
+@import "colors";
+
+.project-details {
+    min-height: 100vh;
+    padding: 160px 20px 80px;
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+
+    &_container {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+    }
+
+    &_header {
+        margin-bottom: 60px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &_back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba($white, 0.6);
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-decoration: none;
+        margin-bottom: 40px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+
+        &:hover {
+            color: $white;
+            transform: translateX(-5px);
+        }
+    }
+
+    &_category {
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        color: $main;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+
+        &::after, &::before {
+            content: '';
+            height: 1px;
+            width: 40px;
+            background: rgba($main, 0.4);
+        }
+    }
+
+    &_title {
+        font-size: clamp(3rem, 6vw, 4.5rem);
+        font-weight: 800;
+        color: $white;
+        margin: 0;
+        line-height: 1.1;
+
+        // Apply gradient to the last word or whole title if needed.
+        // For simplicity, we can apply gradient to the whole text, or just leave it white and bold.
+    }
+
+    &_content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 60px;
+        margin-top: 60px;
+
+        @media (max-width: 991px) {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+    }
+
+    &_left {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    &_subtitle {
+        font-size: 2rem;
+        font-weight: 700;
+        color: $white;
+        margin-bottom: 20px;
+        position: relative;
+        display: inline-block;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 50px;
+            height: 3px;
+            background: $main;
+            border-radius: 2px;
+        }
+    }
+
+    &_description {
+        font-size: 1.15rem;
+        line-height: 1.8;
+        color: rgba($white, 0.7);
+    }
+
+    &_features {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        li {
+            position: relative;
+            padding-left: 36px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba($white, 0.8);
+            display: flex;
+            align-items: center;
+
+            &::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 20px;
+                height: 20px;
+                background-color: rgba($main, 0.15);
+                border: 1px solid rgba($main, 0.4);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            &::after {
+                content: "✓";
+                position: absolute;
+                left: 5px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: $main;
+                font-size: 0.8rem;
+                font-weight: bold;
+            }
+        }
+    }
+
+    &_right {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    &_tech-card,
+    &_links-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 24px;
+        padding: 40px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+        h3 {
+            font-size: 1.2rem;
+            margin-top: 0;
+            margin-bottom: 24px;
+            color: $white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+    }
+
+    &_tech-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+
+        .projects_tech-tag {
+            font-size: 0.85rem;
+            color: rgba($white, 0.9);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        
+            &:hover {
+                background: rgba($main, 0.15);
+                border-color: rgba($main, 0.4);
+                color: $main;
+                transform: translateY(-2px);
+            }
+        }
+    }
+
+    &_actions {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        .projects_btn {
+            text-align: center;
+            width: 100%;
+            margin: 0;
+            padding: 16px 28px;
+            background: linear-gradient(135deg, $main, darken($main, 10%));
+            color: $white;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        
+            &:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 25px rgba($main, 0.4);
+            }
+
+            &--outline {
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                color: $white;
+                box-shadow: none;
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.1);
+                    border-color: $white;
+                    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+                    transform: translateY(-3px);
+                }
+            }
+        }
+    }
+}

@@ -1,20 +1,18 @@
-/*paleta 1*/
-$color1: #000e17;
-$color2: #072430;
-$color3: #053e50;
-$color4: #005e75;
-$color5: #00839f;
-
-/*paleta 2*/
-$color1-1: #1b1d1e;
-$color1-2: #324b61;
-$color1-3: #00384e;
-$color1-4: #326775;
-$color1-5: #66999b;
-
 /*wykorzystane kolory*/
-$white: whitesmoke;
-$dark: rgba(27,29,30,1);
-$darkblue: rgba(7,36,48,1);
-$lightblue: #66999b;
-$main: #00839f;
+$white: #ffffff;
+$dark: #030303;
+/* Deepest black */
+$darkblue: #0a0a0a;
+$lightblue: #1f1f1f;
+$main: #3b82f6;
+/* Keep blue but maybe use it more sparingly as an accent */
+$main-glow: rgba(59, 130, 246, 0.5);
+
+$glass: rgba(255, 255, 255, 0.03);
+$glass-strong: rgba(255, 255, 255, 0.08);
+$glass-border: rgba(255, 255, 255, 0.08);
+$glass-highlight: rgba(255, 255, 255, 0.15);
+
+$text-main: rgba(255, 255, 255, 0.95);
+$text-secondary: rgba(255, 255, 255, 0.7);
+$text-muted: rgba(255, 255, 255, 0.5);

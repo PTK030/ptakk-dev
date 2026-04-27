@@ -1,62 +1,201 @@
-.skills{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  &_content{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    &--headingbox{
-      display: flex;
-      justify-content: flex-start;
+@import 'colors';
+
+.skills {
+    padding: 120px 20px 120px;
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+
+    &_container {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
     }
-    &-heading{
-      font-size: 2.6rem;
-      position: relative;
-      margin-bottom: 1.6em;
-      &::before{
-        position: absolute;
-        content: '';
-        bottom: 0px;
-        right: 0;
-        width: 100%;
-        height: 3px;
-        border-radius: 3px;
-        background-color: $main;
-      }
-    }
-    &-wrapper{
-      display: flex;
-      gap: 2em;
-      flex-direction: column;
-      &_row{
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
-        flex-wrap: wrap;
-        justify-content: center;
-        &-box{
-          background: $dark;
-          padding: 1.5em 2em;
-          flex-basis: 100%;
-          border-radius: 12px;
-          flex-basis: 10%;
-          &_img{
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-          }
-          &_nameofskill{
-            margin-top: 0.4em;
-            font-size: 1.6rem;
-            text-align: center;
-            font-weight: 500;
-          }
+
+    &_grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 60px;
+        align-items: flex-start;
+
+        @media (min-width: 992px) {
+            grid-template-columns: 1fr 1.5fr;
         }
-      }
     }
-  }
+
+    /* ── Content Side (Left) ── */
+    &_content {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        
+        // Sticky behavior so the text stays visible while scrolling the tall grid on desktop
+        @media (min-width: 992px) {
+            position: sticky;
+            top: 150px;
+        }
+    }
+
+    &_eyebrow {
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        color: $main;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+
+        &::after {
+            content: '';
+            height: 1px;
+            width: 40px;
+            background: rgba($main, 0.4);
+        }
+    }
+
+    &_title {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 800;
+        line-height: 1.1;
+        color: $white;
+        margin-bottom: 24px;
+
+        span {
+            background: linear-gradient(135deg, $main 30%, lighten($main, 18%) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
+
+    &_description {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.6);
+        max-width: 650px;
+    }
+
+    /* ── Visual Side: Grid (Right) ── */
+    &_visual {
+        width: 100%;
+    }
+
+    &_wrapper {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+
+        &_box {
+            background-color: rgba($white, 0.015);
+            backdrop-filter: blur(5px);
+            padding: 1.8em;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+
+            // Zintegrowany, animowany border, cien i tlo glow
+            &::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                border-radius: 20px;
+                border: 1px solid var(--hover-color);
+                box-shadow: 0 10px 40px -15px var(--hover-color);
+                background: radial-gradient(circle at top right, var(--hover-color) 0%, transparent 60%);
+                opacity: 0;
+                transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+                pointer-events: none;
+                z-index: 0;
+                mix-blend-mode: overlay;
+            }
+
+            // Podstawowy border
+            &::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                border-radius: 20px;
+                border: 1px solid rgba($white, 0.05);
+                pointer-events: none;
+                z-index: 0;
+            }
+
+            &:hover {
+                transform: translateY(-5px);
+                background-color: rgba($white, 0.03);
+
+                &::before {
+                    opacity: 0.2; // Delikatniejsze swiatlo dla minimalizmu
+                }
+
+                .skills_wrapper_box-header_name {
+                    color: var(--hover-color);
+                }
+
+                .skills_wrapper_box-tags_item {
+                    border-color: rgba($white, 0.15);
+                }
+            }
+
+            &-header {
+                display: flex;
+                align-items: center;
+                gap: 1.2em;
+                margin-bottom: 1em;
+                z-index: 1;
+
+                &_img {
+                    width: 40px;
+                    height: 40px;
+                    object-fit: contain;
+                    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
+                }
+
+                &_name {
+                    font-size: 1.3rem;
+                    font-weight: 500;
+                    letter-spacing: 0.5px;
+                    color: rgba($white, 0.95);
+                    transition: color 0.3s ease;
+                }
+            }
+
+            &-desc {
+                color: rgba($white, 0.6);
+                font-size: 0.9rem;
+                line-height: 1.6;
+                z-index: 1;
+                margin-bottom: 1.2em;
+            }
+
+            &-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.6em;
+                z-index: 1;
+
+                &_item {
+                    font-size: 0.75rem;
+                    color: rgba($white, 0.7);
+                    background-color: rgba($white, 0.03);
+                    border: 1px solid rgba($white, 0.05);
+                    padding: 0.3em 0.8em;
+                    border-radius: 50px;
+                    letter-spacing: 0.5px;
+                    transition: border-color 0.3s ease;
+                }
+            }
+        }
+    }
 }

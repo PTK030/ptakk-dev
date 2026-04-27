@@ -1,0 +1,43 @@
+// Calendly widget overrides
+// Uses structural selectors to target Calendly-injected elements
+
+// Hide the Calendly badge widget injected directly on body
+// This targets any div directly on body that isn't our app or cursor
+body>div:not(#__next):not(.magnetic-cursor):not(.calendly-overlay) {
+    display: none !important;
+}
+
+// Smooth fade-in for overlay background
+.calendly-overlay {
+    animation: calendlyOverlayIn 0.4s ease both;
+}
+
+// Fade-in for popup content
+.calendly-overlay .calendly-popup {
+    animation: calendlyPopupIn 0.45s ease 0.1s both;
+}
+
+// Delayed fade-in for close button
+.calendly-overlay .calendly-popup-close {
+    animation: calendlyPopupIn 0.3s ease 0.35s both;
+}
+
+@keyframes calendlyOverlayIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes calendlyPopupIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

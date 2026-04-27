@@ -9,40 +9,39 @@ import Image from "next/image";
 const Home = () => {
   return (
     <section className="home" id="home">
-        <div className="home_content" data-aos="fade-right"
-     data-aos-offset="300"
-     data-aos-easing="ease-in-sine"
-     data-aos-duration="1000">
-            <p className="home_content-heading home_content-heading-name">Cześć, mam na imię</p>
-            <h2 className="home_content-heading home_content-heading-main">Kamil Ptak</h2>
-            <h2 className="home_content-heading home_content-heading-occupation">Jestem 
-                <TypeAnimation
-                sequence={[
-                    " Front-end Developerem",
-                    1000,
-                    ""
-                ]}
-                speed={20}
-                repeat={Infinity}
-                style={{color: '#00839f'}}/>
-            </h2>
-            <p className="home_content-heading home_content-heading-description">
-              Jestem młodym Front-end Developerem, który szuka wyzwań. Czasami, okazjonalnie lubię coś zaprojektować 😅 <br />
-              Obecnie skupiam się na poszerzeniu swoich kompetencji w Backendzie
-            </p>
-            <div className="home_content-box">
-              <a href='#projects' className='home_content-box-button'>
-                Zobacz projekty <FontAwesomeIcon icon={faAnglesRight} style={{width: "10px", height: "10px"}}/>
-              </a>
-            </div>
+      <div className="home_content" data-aos="fade-up"
+        data-aos-duration="1000">
+        <p className="home_content-heading home_content-heading-name">Portfolio</p>
+        <h2 className="home_content-heading home_content-heading-main">Kamil Ptak</h2>
+        <h2 className="home_content-heading home_content-heading-occupation">
+          <TypeAnimation
+            sequence={[
+              "Full-stack Developer",
+              2000,
+              "UI/UX Designer",
+              2000,
+              "Freelancer",
+              2000
+            ]}
+            speed={50}
+            repeat={Infinity}
+            style={{ color: '#3b82f6' }} />
+        </h2>
+        <p className="home_content-heading home_content-heading-description">
+          Tworzę nowoczesne aplikacje internetowe, które miażdżą konkurencję i realnie skalują Twój biznes.
+        </p>
+        <div className="home_content-box">
+          <a href='#projects' className='home_content-box-button'>
+            Zobacz projekty <FontAwesomeIcon icon={faAnglesRight} style={{ width: "14px", height: "14px" }} />
+          </a>
         </div>
-        <div className="home_img" data-aos="fade-up"
-     data-aos-duration="3000">
-          <Image src="/memoji.png" alt="chłopiec mrugający okiem" height={250} width={250}/>
-        </div>
-        <a href="#aboutme">
-          <FontAwesomeIcon icon={faAngleDown} beat className='home_arrow-down'/>
-        </a>
+      </div>
+      <div className="home_img" data-aos="zoom-in" data-aos-delay="200" data-aos-duration="1000">
+        <Image src="/memoji.png" alt="Kamil Ptak Memoji" height={200} width={200} />
+      </div>
+      <a href="#stats">
+        <FontAwesomeIcon icon={faAngleDown} beat className='home_arrow-down' />
+      </a>
     </section>
   )
 }
