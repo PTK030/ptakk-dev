@@ -1,0 +1,134 @@
+---
+import { urlFor, type Project } from "@/utils/sanity";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const hasPreview = project.preview && project.preview !== "#";
+const hasGithub = project.github && project.github !== "#";
+---
+
+<main class="project-page">
+  <article class="project-page__container">
+    <a href="/projekty" class="project-page__back">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19 12H5M11 18l-6-6 6-6"></path>
+      </svg>
+      Projekty
+    </a>
+
+    <header class="project-page__header">
+      {
+        project.category && (
+          <p class="content-page__eyebrow">{project.category}</p>
+        )
+      }
+      <h1 class="project-page__title">{project.title}</h1>
+      {
+        project.description && (
+          <p class="project-page__lead">{project.description}</p>
+        )
+      }
+    </header>
+
+    {
+      project.sliderImages.length > 0 && (
+        <div
+          class="project-page__gallery"
+          data-count={project.sliderImages.length}
+        >
+          {project.sliderImages.map((image, index) => (
+            <figure
+              class:list={[
+                "project-page__image",
+                { "project-page__image--hero": index === 0 },
+              ]}
+            >
+              <img
+                src={urlFor(image)
+                  .width(index === 0 ? 1400 : 700)
+                  .height(index === 0 ? 875 : 500)
+                  .fit("crop")
+                  .auto("format")
+                  .url()}
+                alt={image.alt || `${project.title} - widok ${index + 1}`}
+                loading={index === 0 ? "eager" : "lazy"}
+                width={index === 0 ? 1400 : 700}
+                height={index === 0 ? 875 : 500}
+              />
+            </figure>
+          ))}
+        </div>
+      )
+    }
+
+    <div class="project-page__details">
+      <section class="project-page__about">
+        <p class="project-page__label">O projekcie</p>
+        <p class="project-page__description">
+          {project.longDescription || project.description}
+        </p>
+      </section>
+
+      <aside class="project-page__meta">
+        {
+          project.tech.length > 0 && (
+            <div class="project-page__meta-group">
+              <p class="project-page__label">Technologie</p>
+              <p class="project-page__tech">{project.tech.join(" · ")}</p>
+            </div>
+          )
+        }
+
+        {
+          (hasPreview || hasGithub) && (
+            <div class="project-page__links" aria-label="Linki do projektu">
+              {hasPreview && (
+                <a
+                  href={project.preview}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Zobacz projekt
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7 17 17 7M8 7h9v9" />
+                  </svg>
+                </a>
+              )}
+              {hasGithub && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  GitHub
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7 17 17 7M8 7h9v9" />
+                  </svg>
+                </a>
+              )}
+            </div>
+          )
+        }
+      </aside>
+    </div>
+
+    {
+      project.features.length > 0 && (
+        <section class="project-page__features">
+          <p class="project-page__label">Najważniejsze elementy</p>
+          <ol>
+            {project.features.map((feature, index) => (
+              <li>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <p>{feature}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )
+    }
+  </article>
+</main>

@@ -1,0 +1,63 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Navbar from '@/components/Navbar.astro';
+import { getPosts, getPost } from '@/utils/blog';
+import { urlFor } from '@/utils/sanity';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({
+    params: { slug: post.id },
+  }));
+}
+
+const { slug } = Astro.params;
+const post = await getPost(slug as string);
+
+if (!post) {
+  return Astro.redirect('/404');
+}
+
+const publishedAt = post.publishedAt
+  ? new Date(post.publishedAt).toLocaleDateString('pl-PL', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    })
+  : null;
+---
+
+<Layout title={`${post.title} | Blog PTAKK`} description={post.excerpt}>
+  <Navbar forceSolid={true} />
+
+  <main class="article-page">
+    <article class="article-page__container">
+      <a href="/blog" class="article-page__back">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 12H5M11 18l-6-6 6-6"></path>
+        </svg>
+        Blog
+      </a>
+
+      <header class="article-page__header">
+        {publishedAt && (
+          <time class="content-page__eyebrow" datetime={post.publishedAt}>{publishedAt}</time>
+        )}
+        <h1 class="article-page__title">{post.title}</h1>
+        {post.excerpt && <p class="article-page__lead">{post.excerpt}</p>}
+      </header>
+
+      {post.mainImage && (
+        <figure class="article-page__image">
+          <img
+            src={urlFor(post.mainImage).width(1400).height(788).fit('crop').auto('format').url()}
+            alt={post.title}
+            loading="eager"
+          />
+        </figure>
+      )}
+
+      <div class="article-page__content" set:html={post.bodyHtml}></div>
+    </article>
+  </main>
+</Layout>

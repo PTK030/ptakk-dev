@@ -1,0 +1,106 @@
+---
+import type { ExperienceItem } from '@/utils/sanity';
+
+interface Props {
+  title: string;
+  subtitle: string;
+  items: ExperienceItem[];
+}
+
+const { title, subtitle, items } = Astro.props;
+---
+
+<div class="timeline-modal" id="timeline-modal" aria-hidden="true">
+  <div class="timeline-modal__overlay" id="timeline-modal-close-bg"></div>
+  <div class="timeline-modal__content timeline-page">
+    <div class="timeline-page__container">
+      
+      <!-- Nagłówek -->
+      <header class="timeline-page__header">
+        <button class="timeline-page__back" id="timeline-modal-close-btn" aria-label="Zamknij historię">
+          <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+          Zamknij
+        </button>
+        <h1 class="timeline-page__title">{title}</h1>
+        <p class="timeline-page__subtitle">{subtitle}</p>
+      </header>
+
+      <!-- Oś Czasu -->
+      <div class="timeline">
+        
+        {items.map((item) => (
+          <div class="timeline__item">
+            <div class="timeline__year">{item.period}</div>
+            <div class="timeline__content">
+              <h2 class="timeline__role">{item.role}</h2>
+              {item.company && <h3 class="timeline__company">{item.company}</h3>}
+              <p class="timeline__desc">{item.description}</p>
+            </div>
+          </div>
+        ))}
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const trigger = document.getElementById('timeline-trigger');
+    const modal = document.getElementById('timeline-modal');
+    const closeBtn = document.getElementById('timeline-modal-close-btn');
+    const closeBg = document.getElementById('timeline-modal-close-bg');
+
+    if (trigger && modal && closeBtn && closeBg) {
+      let closeTimer;
+      let originalBodyPaddingRight = '';
+
+      const openModal = (e) => {
+        e.preventDefault();
+        window.clearTimeout(closeTimer);
+
+        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+        originalBodyPaddingRight = document.body.style.paddingRight;
+        if (scrollbarWidth > 0) {
+          document.body.style.paddingRight = `${scrollbarWidth}px`;
+        }
+
+        modal.classList.add('is-active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      };
+
+      const closeModal = () => {
+        modal.classList.remove('is-active');
+        modal.setAttribute('aria-hidden', 'true');
+
+        window.clearTimeout(closeTimer);
+        closeTimer = window.setTimeout(() => {
+          document.body.style.overflow = '';
+          document.body.style.paddingRight = originalBodyPaddingRight;
+        }, 900);
+      };
+
+      if (!trigger.dataset.timelineReady) {
+        trigger.addEventListener('click', openModal);
+        closeBtn.addEventListener('click', closeModal);
+        closeBg.addEventListener('click', closeModal);
+        trigger.dataset.timelineReady = 'true';
+      }
+    }
+  });
+
+  if (!window.timelineKeydownAttached) {
+    document.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('timeline-modal');
+      if (e.key === 'Escape' && modal && modal.classList.contains('is-active')) {
+        document.getElementById('timeline-modal-close-btn')?.click();
+      }
+    });
+    window.timelineKeydownAttached = true;
+  }
+</script>

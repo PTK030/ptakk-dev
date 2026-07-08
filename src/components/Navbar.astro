@@ -1,0 +1,346 @@
+---
+import appleFaceId from '../assets/images/apple-face-id.gif';
+import memoji from '../assets/images/memoji.png';
+import faceIdSound from '../assets/sounds/apple-face-id.mp3';
+import lockSound from '../assets/sounds/iphone-lock.mp3';
+---
+<nav class="navbar" transition:persist="main-navbar" transition:name="main-navbar" transition:animate="none">
+  <div class="navbar__container">
+    <div class="navbar__left">
+      <div class="navbar__mac-dots" id="mac-dots-container">
+        <span class="navbar__dot navbar__dot--red" id="mac-close" title="Zamknij"></span>
+        <span class="navbar__dot navbar__dot--yellow" id="mac-minimize" title="Minimalizuj"></span>
+        <span class="navbar__dot navbar__dot--green" id="mac-maximize" title="Pełny ekran"></span>
+      </div>
+
+    </div>
+    
+    <div class="navbar__menu" id="main-navigation">
+      <a href="/" class="navbar__menu-link">Home</a>
+      <a href="/o-mnie" class="navbar__menu-link">O mnie</a>
+      <a href="/projekty" class="navbar__menu-link">Projekty</a>
+      <a href="/blog" class="navbar__menu-link">Blog</a>
+      <a href="/kontakt" class="navbar__menu-link navbar__menu-link--special">Kontakt</a>
+    </div>
+
+    <button
+      class="navbar__burger"
+      type="button"
+      aria-label="Otwórz menu"
+      aria-controls="main-navigation"
+      aria-expanded="false"
+    >
+      <div class="navbar__burger-box">
+        <div class="navbar__burger-line"></div>
+        <div class="navbar__burger-line"></div>
+        <div class="navbar__burger-line"></div>
+      </div>
+    </button>
+  </div>
+</nav>
+
+<div class="mac-lockscreen" id="mac-lockscreen" style="opacity: 0; visibility: hidden; pointer-events: none;">
+  <div class="mac-lockscreen__time" id="mac-lockscreen-time">00:00</div>
+  <div class="mac-lockscreen__date" id="mac-lockscreen-date">Poniedziałek, 1 stycznia</div>
+  
+  <div class="mac-lockscreen__user">
+    <img src={memoji.src} alt="Kamil Ptak" class="mac-lockscreen__avatar" />
+    <h2 class="mac-lockscreen__name">Kamil Ptak</h2>
+    <div class="mac-lockscreen__lock" id="mac-lockscreen-lock-ui">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C9.243 2 7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8c0-1.103-.897-2-2-2h-1V7c0-2.757-2.243-5-5-5zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9V7zm9 13H6v-8h12v8z"/></svg>
+      <span id="mac-lockscreen-status">Zaloguj się do systemu</span>
+    </div>
+    <button class="mac-lockscreen__unlock" id="mac-lockscreen-unlock">Zaloguj się</button>
+    
+    <div class="mac-lockscreen__auth" id="mac-lockscreen-auth" style="display: none;">
+      <img src={appleFaceId.src} class="face-id-gif" id="face-id-gif" alt="Face ID" data-src={appleFaceId.src} style="width: 64px; height: 64px; object-fit: contain; mix-blend-mode: screen;" />
+      <audio id="face-id-audio" src={faceIdSound} preload="auto" style="display: none;"></audio>
+      <audio id="lock-audio" src={lockSound} preload="auto" style="display: none;"></audio>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  const timeElInit = document.getElementById('mac-lockscreen-time');
+  const dateElInit = document.getElementById('mac-lockscreen-date');
+  
+  if (timeElInit && dateElInit) {
+    const now = new Date();
+    timeElInit.textContent = now.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
+    let dateStr = now.toLocaleDateString('pl-PL', { weekday: 'long', day: 'numeric', month: 'long' });
+    dateElInit.textContent = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+  }
+
+  if (!sessionStorage.getItem('mac__unlocked')) {
+    const ls = document.getElementById('mac-lockscreen');
+    if (ls) {
+      ls.style.opacity = '1';
+      ls.style.visibility = 'visible';
+      ls.style.pointerEvents = 'auto';
+      ls.style.background = '#09090b'; 
+      ls.classList.add('active');
+      ls.classList.add('startup-animate');
+    }
+  }
+</script>
+
+<script>
+  const setupMacDots = () => {
+    const navbarWindow = window as typeof window & {
+      __navbarEscapeHandler?: (event: KeyboardEvent) => void;
+      __navbarPageLoadHandler?: () => void;
+      __macClockInterval?: number;
+    };
+    const burgerButton = document.querySelector('.navbar__burger') as HTMLButtonElement | null;
+    const mobileMenu = document.querySelector('.navbar__menu') as HTMLElement | null;
+    const menuLinks = mobileMenu?.querySelectorAll<HTMLAnchorElement>('.navbar__menu-link');
+    const closeBtn = document.getElementById('mac-close');
+    const minimizeBtn = document.getElementById('mac-minimize');
+    const maximizeBtn = document.getElementById('mac-maximize');
+    
+    const lockScreen = document.getElementById('mac-lockscreen');
+    const unlockBtn = document.getElementById('mac-lockscreen-unlock');
+    const timeEl = document.getElementById('mac-lockscreen-time');
+    const dateEl = document.getElementById('mac-lockscreen-date');
+    const statusEl = document.getElementById('mac-lockscreen-status');
+
+    const closeMobileMenu = () => {
+      mobileMenu?.classList.remove('navbar__menu--active');
+      burgerButton?.classList.remove('navbar__burger--active');
+      burgerButton?.setAttribute('aria-expanded', 'false');
+      burgerButton?.setAttribute('aria-label', 'Otwórz menu');
+    };
+
+    if (burgerButton && mobileMenu) {
+      closeMobileMenu();
+      burgerButton.onclick = () => {
+        const willOpen = !mobileMenu.classList.contains('navbar__menu--active');
+        mobileMenu.classList.toggle('navbar__menu--active', willOpen);
+        burgerButton.classList.toggle('navbar__burger--active', willOpen);
+        burgerButton.setAttribute('aria-expanded', String(willOpen));
+        burgerButton.setAttribute('aria-label', willOpen ? 'Zamknij menu' : 'Otwórz menu');
+      };
+
+      menuLinks?.forEach((link) => {
+        link.onclick = closeMobileMenu;
+      });
+
+      const previousEscapeHandler = navbarWindow.__navbarEscapeHandler;
+
+      if (previousEscapeHandler) {
+        document.removeEventListener('keydown', previousEscapeHandler);
+      }
+
+      const escapeHandler = (event: KeyboardEvent) => {
+        if (event.key === 'Escape') {
+          closeMobileMenu();
+          burgerButton.focus();
+        }
+      };
+
+      navbarWindow.__navbarEscapeHandler = escapeHandler;
+      document.addEventListener('keydown', escapeHandler);
+    }
+
+    const warmUiSounds = () => {
+      ['lock-audio', 'face-id-audio'].forEach((id) => {
+        const audioEl = document.getElementById(id) as HTMLAudioElement | null;
+        audioEl?.load();
+      });
+    };
+
+    const playUiSound = (audioEl: HTMLAudioElement | null) => {
+      if (!audioEl) return;
+
+      const src = audioEl.currentSrc || audioEl.src;
+      const player = src ? new Audio(src) : audioEl;
+      player.preload = 'auto';
+      player.currentTime = 0;
+      player.play().catch((error) => console.log('Audio play failed:', error));
+    };
+
+    warmUiSounds();
+
+    const playLockSound = () => {
+      playUiSound(document.getElementById('lock-audio') as HTMLAudioElement | null);
+    };
+
+    const updateTime = () => {
+      if (!timeEl || !dateEl) return;
+      const now = new Date();
+      timeEl.textContent = now.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
+      let dateStr = now.toLocaleDateString('pl-PL', { weekday: 'long', day: 'numeric', month: 'long' });
+      dateStr = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+      dateEl.textContent = dateStr;
+    };
+
+    const lockSystem = (isStartup = false) => {
+      updateTime();
+      lockScreen?.classList.add('active');
+      
+      if (!isStartup && statusEl && unlockBtn) {
+        statusEl.textContent = "Sesja zablokowana";
+        unlockBtn.textContent = "Odblokuj";
+      }
+
+      if (lockScreen) {
+        lockScreen.style.opacity = '1';
+        lockScreen.style.visibility = 'visible';
+        lockScreen.style.pointerEvents = 'auto';
+        lockScreen.style.background = '';
+      }
+
+      window.clearInterval(navbarWindow.__macClockInterval);
+      navbarWindow.__macClockInterval = window.setInterval(updateTime, 1000);
+      
+      const wrapper = document.querySelector('.home__wrapper') as HTMLElement;
+      if (wrapper) {
+        wrapper.style.transition = isStartup ? 'none' : 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, filter 0.6s ease';
+        wrapper.style.transform = 'scale(0.95)';
+        wrapper.style.opacity = '0.3';
+        wrapper.style.filter = 'blur(4px)';
+        
+        if (isStartup) {
+          wrapper.offsetHeight; 
+          wrapper.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, filter 0.6s ease';
+        }
+      }
+    };
+
+    if (!sessionStorage.getItem('mac__unlocked')) {
+      lockSystem(true);
+    }
+
+    if (closeBtn) {
+      closeBtn.onclick = () => {
+        sessionStorage.removeItem('mac__unlocked');
+        playLockSound();
+        lockSystem(false);
+      };
+    }
+
+    if (unlockBtn) {
+      unlockBtn.onclick = () => {
+      const lockContainer = document.getElementById('mac-lockscreen-lock-ui');
+      const authContainer = document.getElementById('mac-lockscreen-auth');
+      const gifEl = document.getElementById('face-id-gif') as HTMLImageElement;
+      const audioEl = document.getElementById('face-id-audio') as HTMLAudioElement;
+
+      if (lockContainer && authContainer && unlockBtn && gifEl) {
+        lockContainer.style.display = 'none';
+        unlockBtn.style.display = 'none';
+        authContainer.style.display = 'flex';
+        
+        if (audioEl) {
+          setTimeout(() => {
+            playUiSound(audioEl);
+          }, 360);
+        }
+        
+        const baseSrc = gifEl.getAttribute('data-src');
+        gifEl.src = baseSrc + '?t=' + Date.now();
+
+        setTimeout(() => {
+          sessionStorage.setItem('mac__unlocked', 'true');
+          lockScreen?.classList.remove('active');
+          
+          if (lockScreen) {
+            lockScreen.style.opacity = '0';
+            lockScreen.style.visibility = 'hidden';
+            lockScreen.style.pointerEvents = 'none';
+          }
+
+          window.clearInterval(navbarWindow.__macClockInterval);
+          
+          const wrapper = document.querySelector('.home__wrapper') as HTMLElement;
+          if (wrapper) {
+            wrapper.style.transform = 'scale(1)';
+            wrapper.style.opacity = '1';
+            wrapper.style.filter = 'blur(0)';
+          }
+
+          setTimeout(() => {
+            authContainer.style.display = 'none';
+            lockContainer.style.display = '';
+            unlockBtn.style.display = '';
+          }, 500);
+
+        }, 2800);
+      }
+    };
+  }
+
+    if (minimizeBtn) {
+      minimizeBtn.dataset.minimized = 'false';
+
+      minimizeBtn.onclick = () => {
+        const pageContent =
+          (document.querySelector('.home__wrapper') as HTMLElement | null) ??
+          (document.querySelector('main > div, main > article') as HTMLElement | null) ??
+          (document.querySelector('main') as HTMLElement | null) ??
+          (document.querySelector('body > section') as HTMLElement | null);
+
+        if (!pageContent) return;
+
+        const isMinimized = minimizeBtn.dataset.minimized === 'true';
+
+        if (!isMinimized) {
+          document.body.style.overflow = 'hidden';
+          pageContent.style.transition =
+            'transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s ease';
+          pageContent.style.transformOrigin = 'center bottom';
+          pageContent.style.transform = 'translateY(45vh) scale(0.08)';
+          pageContent.style.opacity = '0';
+          pageContent.style.pointerEvents = 'none';
+          pageContent.dataset.macMinimized = 'true';
+          minimizeBtn.dataset.minimized = 'true';
+          return;
+        }
+
+        const minimizedContent =
+          (document.querySelector('[data-mac-minimized="true"]') as HTMLElement | null) ??
+          pageContent;
+
+        minimizedContent.style.transform = 'translateY(0) scale(1)';
+        minimizedContent.style.opacity = '1';
+        minimizedContent.style.pointerEvents = '';
+        minimizeBtn.dataset.minimized = 'false';
+
+        window.setTimeout(() => {
+          if (minimizeBtn.dataset.minimized === 'true') return;
+
+          minimizedContent.style.transition = '';
+          minimizedContent.style.transform = '';
+          minimizedContent.style.transformOrigin = '';
+          minimizedContent.style.opacity = '';
+          delete minimizedContent.dataset.macMinimized;
+          document.body.style.overflow = '';
+        }, 650);
+      };
+    }
+
+    if (maximizeBtn) {
+      maximizeBtn.onclick = () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(err => {
+            console.log(`Błąd fullscreen: ${err.message}`);
+          });
+        } else {
+          document.exitFullscreen();
+        }
+      };
+    }
+  };
+
+  setupMacDots();
+  const navbarWindow = window as typeof window & {
+    __navbarPageLoadHandler?: () => void;
+  };
+
+  if (navbarWindow.__navbarPageLoadHandler) {
+    document.removeEventListener('astro:page-load', navbarWindow.__navbarPageLoadHandler);
+  }
+
+  navbarWindow.__navbarPageLoadHandler = setupMacDots;
+  document.addEventListener('astro:page-load', navbarWindow.__navbarPageLoadHandler);
+</script>

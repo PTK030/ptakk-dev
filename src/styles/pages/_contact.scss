@@ -1,0 +1,146 @@
+.contact-page {
+  position: relative;
+  min-height: 100svh;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -42rem;
+    left: 50%;
+    width: 100rem;
+    height: 100rem;
+    transform: translateX(-50%);
+    background: radial-gradient(circle closest-side, rgba(255, 255, 255, 0.055), transparent);
+    pointer-events: none;
+  }
+
+  &__container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  &__title {
+    margin-bottom: 1.5rem;
+    color: #fff;
+    font-size: 3.2rem;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+  }
+
+  &__lead {
+    max-width: 600px;
+    margin-bottom: 5.5rem;
+    color: #a1a1aa;
+    font-size: 1.6rem;
+    line-height: 1.6;
+  }
+
+  &__details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 680px;
+    padding-top: 2.4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  &__mail {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    color: #fff;
+
+    &:hover .contact-page__address { color: #a1a1aa; }
+  }
+
+  &__icon {
+    width: 4rem;
+    height: 4rem;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.06);
+
+    svg {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
+  }
+
+  &__mail-copy {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  &__label {
+    color: #71717a;
+    font-size: 1.2rem;
+  }
+
+  &__address {
+    overflow: hidden;
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__socials {
+    display: flex;
+    gap: 0.8rem;
+  }
+
+  &__social {
+    width: 4rem;
+    height: 4rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #71717a;
+    transition: color 0.2s ease, background-color 0.2s ease;
+
+    svg {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-page {
+    &__title {
+      font-size: 2.8rem;
+    }
+
+    &__lead {
+      margin-bottom: 4rem;
+    }
+
+    &__details {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 2.4rem;
+    }
+  }
+}

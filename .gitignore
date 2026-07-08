@@ -1,36 +1,61 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
+# =========================
+# Dependencies
+# =========================
+node_modules/
 /.pnp
 .pnp.js
 .yarn/install-state.gz
 
-# testing
-/coverage
+# =========================
+# Astro (Frontend)
+# =========================
+dist/
+.astro/
+/build/
 
-# next.js
-/.next/
-/out/
+# =========================
+# Sanity (Backend/CMS)
+# =========================
+studio/dist/
+studio/.sanity/
 
-# production
-/build
+# =========================
+# Environment Variables
+# =========================
+.env
+.env.*
+!.env.example
 
-# misc
-.DS_Store
-*.pem
-
-# debug
+# =========================
+# Logs & Debug
+# =========================
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+*.log
 
-# local env files
-.env*.local
+# =========================
+# Testing
+# =========================
+/coverage
 
-# vercel
-.vercel
+# =========================
+# System & IDE
+# =========================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
 
-# typescript
+# =========================
+# TypeScript & Misc
+# =========================
 *.tsbuildinfo
-next-env.d.ts
+*.pem
+.vercel/
+
+# =========================
+# Dumps & Text Files
+# =========================
+*.txt

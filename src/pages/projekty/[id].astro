@@ -1,0 +1,26 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Navbar from '@/components/Navbar.astro';
+import ProjectDetails from '@/components/ProjectDetails.astro';
+import { getProject, getProjectSlugs } from '@/utils/sanity';
+
+export async function getStaticPaths() {
+  const slugs = await getProjectSlugs();
+
+  return slugs.map((id) => ({
+    params: { id },
+  }));
+}
+
+const { id } = Astro.params;
+const project = await getProject(id as string);
+
+if (!project) {
+  return Astro.redirect('/404');
+}
+---
+
+<Layout title={`${project.title} | Projekty PTAKK`} description={project.description}>
+  <Navbar forceSolid={true} />
+  <ProjectDetails project={project} />
+</Layout>

@@ -1,0 +1,356 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  background: transparent;
+
+  &__container {
+    position: relative;
+    z-index: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+    padding: 3rem 2rem;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  &__mac-dots {
+    display: flex;
+    gap: 8px;
+
+    .navbar__dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: url('/src/assets/icons/handpointing.svg') 10 7, pointer;
+      
+      &:hover::after {
+        opacity: 1;
+      }
+      
+      &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: opacity 0.1s ease;
+      }
+      
+      &--red { 
+        background-color: #ff5f56; 
+        border: 1px solid #e0443e;
+        &::after {
+          background-size: 6px;
+          background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 6 6" xmlns="http://www.w3.org/2000/svg"><path stroke="%234d0000" stroke-width="1.2" stroke-linecap="round" d="M1,1 L5,5 M5,1 L1,5"/></svg>');
+        }
+      }
+      &--yellow { 
+        background-color: #ffbd2e; 
+        border: 1px solid #dea123;
+        &::after {
+          background-size: 6px;
+          background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 6 6" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="3" x2="5" y2="3" stroke="%235a3a00" stroke-width="1.2" stroke-linecap="round"/></svg>');
+        }
+      }
+      &--green { 
+        background-color: #27c93f; 
+        border: 1px solid #1aab29;
+        &::after {
+          background-size: 6px;
+          background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 6 6" xmlns="http://www.w3.org/2000/svg"><path d="M1 1h2.5L1 3.5zm4 4H2.5L5 2.5z" fill="%23004d00"/></svg>');
+        }
+      }
+    }
+  }
+
+  &__logo-box {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 0.6rem;
+  }
+
+  &__logo-icon {
+    width: 16px;
+    height: 16px;
+    color: #ffffff;
+  }
+
+  &__logo {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: -0.2px;
+  }
+
+  &__menu {
+    display: flex;
+    align-items: center;
+    gap: 2.4rem;
+
+    &-link {
+      text-decoration: none;
+      color: #a1a1aa;
+      font-size: 1.4rem;
+      font-weight: 400;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #ffffff;
+      }
+
+      &--special {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.8rem 1.6rem;
+        background-color: #ffffff;
+        color: #000000;
+        font-weight: 500;
+        border-radius: 50px;
+        transition: all 0.2s ease;
+
+        &:hover {
+          color: #000000;
+          background-color: #e4e4e7;
+          transform: translateY(-1px);
+        }
+      }
+    }
+  }
+
+  &__burger {
+    display: none;
+    border: none;
+    background: transparent;
+    z-index: 200;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+
+    &-box {
+      width: 20px;
+      height: 12px;
+      position: relative;
+      display: block;
+
+      .navbar__burger-line {
+        height: 1.5px;
+        width: 100%;
+        background-color: #a1a1aa;
+        border-radius: 2px;
+        position: absolute;
+        left: 0;
+        transition: all 0.3s ease;
+
+        &:nth-child(1) { top: 0; }
+        &:nth-child(2) { top: 5px; }
+        &:nth-child(3) { top: 10px; }
+      }
+    }
+
+    &--active {
+      .navbar__burger-line {
+        &:nth-child(1) {
+          top: 5px;
+          transform: rotate(45deg);
+        }
+
+        &:nth-child(2) {
+          opacity: 0;
+          transform: scaleX(0);
+        }
+
+        &:nth-child(3) {
+          top: 5px;
+          transform: rotate(-45deg);
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__container {
+      padding: 2rem;
+    }
+
+    &__menu {
+      display: none;
+
+      &--active {
+        display: flex;
+      }
+    }
+
+    &__burger {
+      display: flex;
+    }
+  }
+}
+
+.mac-lockscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100svh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  z-index: 10000;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  backface-visibility: hidden;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+  color: white;
+
+  &.active {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+  }
+
+  &__time {
+    position: absolute;
+    top: 6vh;
+    font-size: 8rem;
+    font-weight: 600;
+    font-family: 'SF Pro Display', -apple-system, sans-serif;
+    letter-spacing: -2px;
+  }
+
+  &__date {
+    position: absolute;
+    top: 17vh;
+    font-size: 2rem;
+    font-weight: 400;
+    font-family: 'SF Pro Text', -apple-system, sans-serif;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  &__user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateY(-20px);
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    
+    .mac-lockscreen.active & {
+      transform: translateY(0);
+    }
+  }
+
+  &__avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+
+  &__name {
+    font-size: 2.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-family: 'SF Pro Display', -apple-system, sans-serif;
+  }
+
+  &__lock {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.4rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 3rem;
+  }
+
+  &__unlock {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.8rem 2.4rem;
+    border-radius: 50px;
+    font-size: 1.4rem;
+    font-weight: 500;
+    cursor: url('/src/assets/icons/handpointing.svg') 10 7, pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+  }
+
+  &__auth {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    margin-top: 1rem;
+  }
+
+  &.startup-animate {
+    .mac-lockscreen__time {
+      animation: macFadeUp 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation-delay: 0.1s;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .mac-lockscreen__date {
+      animation: macFadeUp 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation-delay: 0.25s;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .mac-lockscreen__user {
+      animation: macFadeUp 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation-delay: 0.4s;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+}
+
+@keyframes macFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes faceIdScan {
+  0% { transform: scale(0.95); opacity: 0.7; }
+  100% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 12px rgba(255,255,255,0.6)); }
+}

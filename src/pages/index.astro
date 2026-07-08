@@ -1,0 +1,24 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Navbar from "@/components/Navbar.astro";
+import Home from "@/components/Home.astro";
+import { getSiteProfile } from '@/utils/sanity';
+
+import 'aos/dist/aos.css';
+
+const siteProfile = await getSiteProfile();
+---
+
+<Layout>
+    <Navbar />
+    <Home techStack={siteProfile.techStack} />
+</Layout>
+
+<script>
+  import AOS from 'aos';
+  
+    AOS.init({
+      duration: 800,
+      once: false,
+    });
+</script>

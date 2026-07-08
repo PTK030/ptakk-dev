@@ -1,0 +1,56 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Navbar from '@/components/Navbar.astro';
+import { getProjects } from '@/utils/sanity';
+import buildingEmoji from '../assets/emojis/building.png';
+
+const projects = await getProjects();
+---
+
+<Layout
+  title="Projekty | Kamil Ptak"
+  description="Wybrane projekty webowe i cyfrowe produkty stworzone przez Kamila Ptaka."
+>
+  <Navbar forceSolid={true} />
+
+  <main class="content-page listing-page">
+    <div class="content-page__container">
+      <header class="content-page__header">
+        <p class="content-page__eyebrow">Wybrane realizacje</p>
+        <h1 class="content-page__title">Projekty <img src={buildingEmoji.src} alt="🏗️" class="content-page__title-emoji" style="width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-left: 0.3em; display: inline-block;" /></h1>
+        <p class="content-page__lead">
+          Kilka moich produktów, w których technologia pozostaje w tle, a na pierwszym
+          planie jest realna wartość.
+        </p>
+      </header>
+
+      <div class="minimal-list">
+        {projects.length === 0 ? (
+          <div class="minimal-list minimal-list--empty">
+            <p>Projekty pojawią się tutaj wkrótce.</p>
+          </div>
+        ) : (
+          projects.map((project, index) => (
+            <a class="minimal-list__item" href={`/projekty/${project.id}`}>
+              <span class="minimal-list__index">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <span class="minimal-list__content">
+                {project.category && (
+                  <span class="minimal-list__meta">{project.category}</span>
+                )}
+                <h2 class="minimal-list__title">{project.title}</h2>
+                {project.description && (
+                  <p class="minimal-list__description">{project.description}</p>
+                )}
+              </span>
+              <svg class="minimal-list__arrow" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6"></path>
+              </svg>
+            </a>
+          ))
+        )}
+      </div>
+    </div>
+  </main>
+</Layout>

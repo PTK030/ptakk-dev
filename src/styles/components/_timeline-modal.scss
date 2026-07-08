@@ -1,0 +1,288 @@
+
+.timeline-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100svh;
+  z-index: 9999;
+  isolation: isolate;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s linear 0.4s; 
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+
+  &.is-active {
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+
+    .timeline-modal__overlay {
+      opacity: 1;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .timeline-page__container {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  &__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    transition: opacity 0.4s cubic-bezier(0.33, 1, 0.68, 1), backdrop-filter 0.4s cubic-bezier(0.33, 1, 0.68, 1), -webkit-backdrop-filter 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+    will-change: opacity, backdrop-filter;
+    z-index: 0;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 10rem;
+    padding-bottom: 12rem;
+  }
+}
+
+.timeline-page {
+  &__container {
+    width: 100%;
+    max-width: 700px;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+    transition: transform 0.4s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+    will-change: transform, opacity;
+  }
+
+  &__header {
+    margin-bottom: 6rem;
+  }
+
+  &__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 4rem;
+    transition: color 0.3s ease;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+
+    &:hover {
+      color: rgba(255, 255, 255, 1);
+    }
+  }
+
+  &__title {
+    font-size: 5rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &__subtitle {
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.5;
+    font-weight: 400;
+  }
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%);
+    
+    @media (min-width: 768px) {
+      left: 140px;
+    }
+  }
+
+  &__item {
+    position: relative;
+    padding-left: 3rem;
+    padding-bottom: 6rem;
+    
+    @media (min-width: 768px) {
+      padding-left: 180px;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0.5rem;
+      left: -3px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.4);
+      
+      @media (min-width: 768px) {
+        left: 137px;
+      }
+    }
+  }
+
+  &__year {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    
+    @media (min-width: 768px) {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100px;
+      text-align: right;
+      margin-bottom: 0;
+      padding-top: 0.1rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__role {
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  &__company {
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 2rem;
+  }
+
+  &__desc {
+    font-size: 1.6rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.75);
+    max-width: 500px;
+  }
+}
+
+.about-page__timeline-trigger {
+  margin-top: 6rem;
+  display: flex;
+  justify-content: flex-start;
+
+  .timeline-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1.6rem 3rem;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 0;
+    }
+
+    span {
+      position: relative;
+      z-index: 1;
+      cursor: url('/src/assets/icons/handpointing.svg') 10 7, pointer;
+    }
+
+    svg {
+      cursor: url('/src/assets/icons/handpointing.svg') 10 7, pointer;
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      position: relative;
+      z-index: 1;
+    }
+
+    span {
+      position: relative;
+      z-index: 1;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.05);
+
+      &::before {
+        opacity: 1;
+      }
+
+      svg {
+        transform: translateX(4px);
+      }
+    }
+  }
+}

@@ -1,0 +1,112 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Navbar from "@/components/Navbar.astro";
+import ImmersiveTimeline from "@/components/ImmersiveTimeline.astro";
+import { getSiteProfile } from "@/utils/sanity";
+import bicepEmoji from "../assets/emojis/bicep.png";
+import nextjs from "../assets/images/nextjs.png";
+import reactIcon from "../assets/images/react.png";
+import typescript from "../assets/images/typescript.png";
+import django from "../assets/images/django.png";
+import postgresql from "../assets/images/postgresql.png";
+import mongo from "../assets/images/mongo.png";
+
+const siteProfile = await getSiteProfile();
+---
+
+<Layout
+  title="O mnie | Kamil Ptak"
+  description="Kilka słów o mnie, moim podejściu do projektowania i tworzenia produktów cyfrowych."
+>
+  <Navbar forceSolid={true} />
+
+  <main class="content-page about-page">
+    <div class="content-page__container">
+      <header class="content-page__header">
+        <p class="content-page__eyebrow">O mnie</p>
+        <h1 class="content-page__title">
+          Zamieniam codzienne problemy w kod. <img src={bicepEmoji.src} alt="💪" class="content-page__title-emoji" style="width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-left: 0.3em; display: inline-block;" />
+        </h1>
+        <p class="content-page__lead">
+          Nie fascynuje mnie technologia dla samej technologii. Piszę kod z konkretnego powodu: żeby usuwać bariery. Mój cel jest jeden – tworzyć produkty, z którymi po prostu łatwiej się żyje i pracuje.
+        </p>
+      </header>
+
+      <div class="about-page__details">
+        <section class="about-page__section">
+          <h2>Fundamenty</h2>
+          <p>
+            Swoje doświadczenie opieram na praktyce, co bezpośrednio przekłada się na stabilny, czysty kod. Traktuję projekt jako spójną całość – buduję szybkie bazy danych i podpinam pod nie intuicyjny interfejs.
+          </p>
+        </section>
+
+        <section class="about-page__section">
+          <h2>Podejście</h2>
+          <p>
+            W pracy i w kodzie cenię absolutną przejrzystość. Kiedy wchodzę w projekt, angażuję się w 100%. W zespole stawiam na konkret – jeśli biorę za coś odpowiedzialność, zadanie jest wykonane od A do Z, bez ukrytych błędów.
+          </p>
+        </section>
+      </div>
+
+      <div class="about-page__tech-icons" aria-label="Kluczowe technologie">
+        <div class="tech-icon-wrapper" data-hint="Next.js">
+          <img src={nextjs.src} alt="Next.js" />
+        </div>
+        <div class="tech-icon-wrapper" data-hint="React Native">
+          <img src={reactIcon.src} alt="React Native" />
+        </div>
+        <div class="tech-icon-wrapper" data-hint="TypeScript">
+          <img src={typescript.src} alt="TypeScript" />
+        </div>
+        <div class="tech-icon-wrapper" data-hint="Django">
+          <img src={django.src} alt="Django" class="force-white" />
+        </div>
+        <div class="tech-icon-wrapper" data-hint="Flask">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flask/flask-original.svg"
+            alt="Flask"
+            class="force-white"
+          />
+        </div>
+        <div class="tech-icon-wrapper" data-hint="PostgreSQL">
+          <img src={postgresql.src} alt="SQL (PostgreSQL)" />
+        </div>
+        <div class="tech-icon-wrapper" data-hint="MongoDB">
+          <img src={mongo.src} alt="MongoDB" />
+        </div>
+        <div class="tech-icon-wrapper" data-hint="Express.js">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original-wordmark.svg"
+            alt="Express.js"
+            class="force-white"
+          />
+        </div>
+      </div>
+
+      <div class="about-page__timeline-trigger">
+        <button id="timeline-trigger" class="timeline-btn">
+          <span>Przebieg kariery</span>
+          <svg
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            stroke="currentColor"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 12h14"></path>
+            <path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <ImmersiveTimeline
+    title={siteProfile.experienceTitle}
+    subtitle={siteProfile.experienceSubtitle}
+    items={siteProfile.experience}
+  />
+</Layout>

@@ -1,0 +1,23 @@
+{
+  "name": "ptakk-studio",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "build": "sanity build"
+  },
+  "dependencies": {
+    "@sanity/vision": "^6.4.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "sanity": "^6.4.0",
+    "styled-components": "^6.4.3"
+  },
+  "devDependencies": {
+    "@sanity/eslint-config-studio": "^6.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.9.4",
+    "typescript": "^6.0.3"
+  }
+}

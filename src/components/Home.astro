@@ -1,0 +1,47 @@
+---
+import sunglassesEmoji from '../assets/emojis/sunglasses.png';
+import memoji from '../assets/images/memoji.png';
+
+interface Props {
+    techStack: string[];
+}
+
+const { techStack } = Astro.props;
+const featuredStack = techStack.slice(0, 2).join(" & ");
+---
+
+<section class="home" id="home">
+    <div class="home__wrapper">
+        <div class="home__content" data-aos="fade-up" data-aos-duration="1000">
+            <div class="home__profile">
+                <img src={memoji.src} alt="Kamil Ptak" class="home__avatar" />
+            </div>
+
+            <h1 class="home__title">
+                Cześć, jestem Kamil. <img src={sunglassesEmoji.src} alt="😎" class="home__title-emoji" style="width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-left: 0.3em; display: inline-block;" />
+            </h1>
+
+            <p class="home__description">
+                Piszę kod, który rozwiązuje problemy, a nie je generuje. Stawiam na jakość, minimalistyczny design i czystą architekturę. Zero zbędnych linijek, 100% użyteczności. <br> Aktualnie pracuję z <span class="highlight">{featuredStack}</span>.
+            </p>
+
+            <div class="home__skills-section">
+                <h3 class="home__skills-title">Główne umiejętności</h3>
+                <p class="home__skills-list">
+                    {
+                        techStack.map((technology, index) => (
+                            <>
+                                {index > 0 && <span class="home__dot">·</span>}
+                                {technology}
+                            </>
+                        ))
+                    }
+                </p>
+            </div>
+
+            <div class="home__action">
+                <a href="/kontakt" class="home__btn home__btn--primary">Napisz do mnie</a>
+            </div>
+        </div>
+    </div>
+</section>

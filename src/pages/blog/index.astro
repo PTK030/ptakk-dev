@@ -1,0 +1,60 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Navbar from '@/components/Navbar.astro';
+import { getPosts } from '@/utils/blog';
+import brainEmoji from '../../assets/emojis/brain.png';
+
+const posts = await getPosts();
+
+const formatDate = (date: string) =>
+  new Date(date).toLocaleDateString('pl-PL', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+---
+
+<Layout
+  title="Blog | PTAKK"
+  description="Przemyślenia o kodzie, designie, technologii i budowaniu cyfrowych produktów."
+>
+  <Navbar forceSolid={true} />
+
+  <main class="content-page listing-page">
+    <div class="content-page__container">
+      <header class="content-page__header">
+        <p class="content-page__eyebrow">Notatki i obserwacje</p>
+        <h1 class="content-page__title">Blog <img src={brainEmoji.src} alt="🧠" class="content-page__title-emoji" style="width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-left: 0.3em; display: inline-block;" /></h1>
+        <p class="content-page__lead">
+          Moje prywatne, niepopularne opinie o pisaniu kodu, designie i biznesie.
+        </p>
+      </header>
+
+      <div class="minimal-list minimal-list--blog">
+        {posts.length === 0 ? (
+          <div class="minimal-list minimal-list--empty">
+            <p>Wpisy pojawią się tutaj wkrótce.</p>
+          </div>
+        ) : (
+          posts.map((post, index) => (
+            <a class="minimal-list__item" href={`/blog/${post.id}`}>
+              <span class="minimal-list__index">{String(index + 1).padStart(2, '0')}</span>
+              <span class="minimal-list__content">
+                {post.publishedAt && (
+                  <time class="minimal-list__meta" datetime={post.publishedAt}>
+                    {formatDate(post.publishedAt)}
+                  </time>
+                )}
+                <h2 class="minimal-list__title">{post.title}</h2>
+                {post.excerpt && <p class="minimal-list__description">{post.excerpt}</p>}
+              </span>
+              <svg class="minimal-list__arrow" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6"></path>
+              </svg>
+            </a>
+          ))
+        )}
+      </div>
+    </div>
+  </main>
+</Layout>

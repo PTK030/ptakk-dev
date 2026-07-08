@@ -1,0 +1,29 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Navbar from '@/components/Navbar.astro';
+import meltingFace from '../assets/emojis/melting-face.png';
+---
+
+<Layout title="404 - Nie znaleziono strony | PTAKK">
+    <Navbar />
+    
+    <section class="home" id="not-found">
+        <div class="home__wrapper">
+            <div class="home__content" data-aos="fade-up" data-aos-duration="1000">
+                <div class="home__profile" style="margin-bottom: 2rem;">
+                    <img src={meltingFace.src} alt="404" style="width: 80px; height: 80px; display: block;" />
+                </div>
+                
+                <h1 class="home__title">404 - Zboczyłeś z kursu.</h1>
+                
+                <p class="home__description">
+                    Wygląda na to, że ta strona nie istnieje. Została przeniesiona, usunięta lub nigdy jej tu nie było.
+                </p>
+
+                <div class="home__action">
+                    <a href="/" class="home__btn home__btn--primary">Wróć na stronę główną</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</Layout>
