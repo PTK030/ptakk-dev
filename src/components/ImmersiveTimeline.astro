@@ -15,7 +15,6 @@ const { title, subtitle, items } = Astro.props;
   <div class="timeline-modal__content timeline-page">
     <div class="timeline-page__container">
       
-      <!-- Nagłówek -->
       <header class="timeline-page__header">
         <button class="timeline-page__back" id="timeline-modal-close-btn" aria-label="Zamknij historię">
           <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -28,7 +27,6 @@ const { title, subtitle, items } = Astro.props;
         <p class="timeline-page__subtitle">{subtitle}</p>
       </header>
 
-      <!-- Oś Czasu -->
       <div class="timeline">
         
         {items.map((item) => (

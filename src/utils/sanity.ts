@@ -111,7 +111,7 @@ export function urlFor(source: SanityImage) {
   return builder.image(source);
 }
 
-const PROJECT_SUMMARIES_QUERY = /* groq */ `
+const PROJECT_SUMMARIES_QUERY = `
   *[_type == "project" && defined(slug.current)]
   | order(_createdAt asc) {
     "id": slug.current,
@@ -121,13 +121,13 @@ const PROJECT_SUMMARIES_QUERY = /* groq */ `
   }
 `;
 
-const PROJECT_SLUGS_QUERY = /* groq */ `
+const PROJECT_SLUGS_QUERY = `
   *[_type == "project" && defined(slug.current)] {
     "id": slug.current
   }
 `;
 
-const PROJECT_QUERY = /* groq */ `
+const PROJECT_QUERY = `
   *[_type == "project" && slug.current == $slug][0] {
     "id": slug.current,
     title,
@@ -159,7 +159,7 @@ const PROJECT_QUERY = /* groq */ `
   }
 `;
 
-const SITE_PROFILE_QUERY = /* groq */ `
+const SITE_PROFILE_QUERY = `
   *[_type == "siteProfile" && _id == "siteProfile"][0] {
     techStack,
     experienceTitle,

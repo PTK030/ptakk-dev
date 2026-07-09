@@ -1,26 +1,20 @@
-// 1. Abstracts (zmienne, fonty, mixiny)
 @import 'abstracts/colors';
 @import 'abstracts/fonts';
 @import 'abstracts/responsives';
 
-// 2. Base (resety, tagi globalne, typografia)
 @import 'base/reset';
 @import 'base/typography';
 @import 'base/global';
 
-// 3. Components (niezależne widgety)
 @import 'components/navbar';
 @import 'components/timeline';
 @import 'components/timeline-modal';
 @import 'components/transitions';
 
-// 4. Pages (style specyficzne dla podstron)
 @import 'pages/home';
 @import 'pages/blog';
 @import 'pages/contact';
 @import 'pages/project-details';
-
-// Mixin section-heading z oryginalnego main.scss (powinien docelowo trafić do abstracts/mixins)
 @mixin section-heading {
   font-size: 2.6rem;
   position: relative;
