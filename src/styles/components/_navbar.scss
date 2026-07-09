@@ -232,6 +232,12 @@
           margin-top: 1rem;
           padding: 1.2rem 3rem;
           font-size: 1.6rem;
+          background-color: #ffffff;
+          color: #000000;
+
+          &:hover {
+            color: #000000;
+          }
         }
       }
     }
