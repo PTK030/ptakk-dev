@@ -1,5 +1,6 @@
 ---
 import "@/styles/main.scss";
+import 'aos/dist/aos.css';
 import { ClientRouter } from 'astro:transitions';
 
 interface Props {
@@ -43,4 +44,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://ptakk.pl
   <body>
     <slot />
   </body>
+
+  <script>
+    import AOS from 'aos';
+
+    function initAOS() {
+      AOS.init({
+        duration: 800,
+        once: false,
+      });
+    }
+
+    // Initial load
+    initAOS();
+
+    // Re-initialize after every View Transition page swap
+    document.addEventListener('astro:after-swap', initAOS);
+  </script>
 </html>
