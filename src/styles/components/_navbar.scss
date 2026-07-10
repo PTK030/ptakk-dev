@@ -191,7 +191,7 @@
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 968px) {
     &__container {
       padding: 2rem;
     }
@@ -202,7 +202,9 @@
       left: 0;
       width: 100vw;
       height: 100svh;
-      background: #09090b;
+      background: rgba(3, 3, 3, 0.98);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -215,7 +217,8 @@
       transform: translateY(-10px);
       transition: opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1),
                   visibility 0.35s cubic-bezier(0.25, 1, 0.5, 1),
-                  transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+                  transform 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                  backdrop-filter 0.35s cubic-bezier(0.25, 1, 0.5, 1);
 
       &--active {
         opacity: 1;
@@ -255,9 +258,10 @@
   left: 0;
   width: 100vw;
   height: 100svh;
-  background: #09090b;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
   z-index: 10000;
-  isolation: isolate;
   display: flex;
   flex-direction: column;
   justify-content: center;

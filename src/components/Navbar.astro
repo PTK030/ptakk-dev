@@ -77,7 +77,6 @@ import lockSound from '../assets/sounds/iphone-lock.mp3';
       ls.style.opacity = '1';
       ls.style.visibility = 'visible';
       ls.style.pointerEvents = 'auto';
-      ls.style.background = '#09090b'; 
       ls.classList.add('active');
       ls.classList.add('startup-animate');
     }
@@ -332,15 +331,5 @@ import lockSound from '../assets/sounds/iphone-lock.mp3';
     }
   };
 
-  setupMacDots();
-  const navbarWindow = window as typeof window & {
-    __navbarPageLoadHandler?: () => void;
-  };
-
-  if (navbarWindow.__navbarPageLoadHandler) {
-    document.removeEventListener('astro:page-load', navbarWindow.__navbarPageLoadHandler);
-  }
-
-  navbarWindow.__navbarPageLoadHandler = setupMacDots;
-  document.addEventListener('astro:page-load', navbarWindow.__navbarPageLoadHandler);
+  document.addEventListener('astro:page-load', setupMacDots);
 </script>

@@ -51,7 +51,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://ptakk.pl
     function initAOS() {
       AOS.init({
         duration: 800,
-        once: false,
+        once: true,
       });
     }
 
