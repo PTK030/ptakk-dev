@@ -87,7 +87,6 @@ import lockSound from '../assets/sounds/iphone-lock.mp3';
   const setupMacDots = () => {
     const navbarWindow = window as typeof window & {
       __navbarEscapeHandler?: (event: KeyboardEvent) => void;
-      __navbarPageLoadHandler?: () => void;
       __macClockInterval?: number;
     };
     const burgerButton = document.querySelector('.navbar__burger') as HTMLButtonElement | null;
@@ -331,5 +330,6 @@ import lockSound from '../assets/sounds/iphone-lock.mp3';
     }
   };
 
+  setupMacDots();
   document.addEventListener('astro:page-load', setupMacDots);
 </script>
